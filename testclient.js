@@ -1,4 +1,4 @@
-var PORT = 9000;
+var PORT = 8090;
 var net = require('net');
 var rl = require('readline');
 
@@ -17,6 +17,8 @@ rl = rl.createInterface(process.stdin, process.stdout, null);
 rl.prompt();
 rl.on('line', function (cmd) {  
   console.log(cmd);
-  client.write(cmd);
+  var outstr = Buffer( 'xxxx' + cmd );
+  outstr.writeUInt32BE(Buffer.byteLength(cmd), 0);
+  client.write(outstr);
   rl.prompt(); 
 });
