@@ -1,8 +1,9 @@
-var PORT = 8090;
+var PORT = parseInt(process.argv[3], 10) || 8090;
+var HOST = process.argv[2] || 'localhost';
 var net = require('net');
 var rl = require('readline');
-
-var client = net.connect(PORT, function() { //'connect' listener
+console.log(HOST, PORT);
+var client = net.connect(PORT, HOST, function() { //'connect' listener
   console.log('\nClient connected');
 });
 
@@ -17,8 +18,9 @@ rl = rl.createInterface(process.stdin, process.stdout, null);
 rl.prompt();
 rl.on('line', function (cmd) {  
   console.log(cmd);
-  var outstr = Buffer( 'xxxx' + cmd );
-  outstr.writeUInt32BE(Buffer.byteLength(cmd), 0);
+  var outstr = Buffer( cmd );
+  //outstr.writeUInt32BE(Buffer.byteLength(cmd), 0);
   client.write(outstr);
   rl.prompt(); 
 });
+
