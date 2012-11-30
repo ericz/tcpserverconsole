@@ -1,4 +1,4 @@
-var PORT = 8090;
+var PORT = process.argv[2] || 8090;
 
 var net = require('net');
 var rl = require('readline');
